@@ -14,29 +14,12 @@ import { ref, onMounted } from 'vue';
 
 const map = shallowRef<null | YMap>(null);
 const cars = ref<Car[]>([]);
-const temporaryCarsStorage = ref<Car[]>([]);
 
 const getCars = async () => {
   getAllCars().then((result: Car[]) => {
-    console.log(result);
     cars.value = result;
-    temporaryCarsStorage.value = result;
-    console.log(cars.value);
-    console.log(temporaryCarsStorage.value);
   });
 };
-
-const markers = [
-  {
-    coordinates: [37.623, 55.752] as LngLat,
-  },
-  {
-    coordinates: [38.125, 55.622] as LngLat,
-  },
-  {
-    coordinates: [37.295, 55.415] as LngLat,
-  },
-];
 
 const convertToCoordinates = (car: Car): LngLat => {
   const coordinates: LngLat = [car.longitude, car.latitude];

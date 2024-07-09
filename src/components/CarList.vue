@@ -6,15 +6,11 @@ import type { Car } from '../types/index';
 import { getAllCars } from '../api/api';
 
 const cars = ref<Car[]>([]);
-const temporaryCarsStorage = ref<Car[]>([]);
 const selectedValue = ref<string>('0');
 
 const getCars = async () => {
   getAllCars().then((result: Car[]) => {
     cars.value = result;
-    temporaryCarsStorage.value = result;
-    console.log(cars.value);
-    console.log(temporaryCarsStorage.value);
   });
 };
 

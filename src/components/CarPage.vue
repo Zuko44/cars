@@ -124,15 +124,6 @@ const saveEditedCarHandler = (
   border-radius: 7px;
 }
 
-.fields {
-  width: 318px;
-  height: 40px;
-  padding: 10px;
-  outline: none;
-  background: white;
-  margin: 10px;
-}
-
 .car {
   width: 357px;
   height: 314px;
