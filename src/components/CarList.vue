@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import CarPage from '../components/CarPage.vue';
+import CarItem from '../components/CarItem.vue';
 import MapPage from '../components/MapPage.vue';
 import type { Car } from '../types/index';
 import { getAllCars } from '../api/api';
@@ -33,18 +33,18 @@ const editCarHandler = (
 };
 
 const sortBy = () => {
-  const values = selectedValue.value.split(' ');
-  if (values[0] === 'asc') {
+  const [sortType, sortBy] = selectedValue.value.split(' ');
+  if (sortType === 'asc') {
     cars.value.sort((car1, car2) =>
-      values[1] === 'year' ? car1.year - car2.year : car1.price - car2.price,
+      sortBy === 'year' ? car1.year - car2.year : car1.price - car2.price,
     );
   }
-  if (values[0] === 'desc') {
+  if (sortType === 'desc') {
     cars.value.sort((car1, car2) =>
-      values[1] === 'year' ? car2.year - car1.year : car2.price - car1.price,
+      sortBy === 'year' ? car2.year - car1.year : car2.price - car1.price,
     );
   }
-  if (values[0] === 'reset') {
+  if (sortType === 'reset') {
     cars.value.sort((car1, car2) => car1.id - car2.id);
     console.log(cars.value);
   }
@@ -65,13 +65,13 @@ onMounted(() => {
         <option value="desc price">Цена по убыванию</option>
         <option value="asc year">Год по возрастанию</option>
         <option value="desc year">Год по убыванию</option>
-        <option value="reset all">Сбросить</option>
+        <option value="reset all">Без фильтров</option>
       </select>
     </div>
   </article>
   <main>
     <div class="cars">
-      <CarPage
+      <CarItem
         v-for="car in cars"
         :key="car.id"
         :car="car"
