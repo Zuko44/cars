@@ -14,7 +14,7 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(
   createYmaps({
-    apikey: ca5241f0-20a2-4fe1-81af-13f6f047a313,
+    apikey: 'ca5241f0-20a2-4fe1-81af-13f6f047a313',
   }),
 );
 // app.use(YmapPlugin, {
