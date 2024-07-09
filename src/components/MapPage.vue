@@ -12,7 +12,6 @@ import {
 import type { LngLat } from '@yandex/ymaps3-types';
 import { ref, onMounted } from 'vue';
 
-//Можно использовать для различных преобразований
 const map = shallowRef<null | YMap>(null);
 const cars = ref<Car[]>([]);
 const temporaryCarsStorage = ref<Car[]>([]);
@@ -40,9 +39,7 @@ const markers = [
 ];
 
 const convertToCoordinates = (car: Car): LngLat => {
-  const coordinates: LngLat = [car.latitude, car.longitude];
-  console.log(coordinates);
-  console.log(typeof coordinates);
+  const coordinates: LngLat = [car.longitude, car.latitude];
   return coordinates;
 };
 

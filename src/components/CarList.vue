@@ -7,6 +7,7 @@ import { getAllCars } from '../api/api';
 
 const cars = ref<Car[]>([]);
 const temporaryCarsStorage = ref<Car[]>([]);
+const selectedValue = ref<string>('0');
 
 const getCars = async () => {
   getAllCars().then((result: Car[]) => {
@@ -36,19 +37,17 @@ const editCarHandler = (
   }
 };
 
-const sortByAscending = (msg: string) => {
-  if (msg === 'price') {
-    cars.value.sort((car1: Car, car2: Car) => car1.price - car2.price);
-  } else {
-    cars.value.sort((car1: Car, car2: Car) => car1.year - car2.year);
+const sortBy = () => {
+  const values = selectedValue.value.split(' ');
+  if (values[0] === 'asc') {
+    cars.value.sort((car1, car2) =>
+      values[1] === 'year' ? car1.year - car2.year : car1.price - car2.price,
+    );
   }
-};
-
-const sortByDescending = (msg: string) => {
-  if (msg === 'price') {
-    cars.value.sort((car1: Car, car2: Car) => car2.price - car1.price);
-  } else {
-    cars.value.sort((car1: Car, car2: Car) => car2.year - car1.year);
+  if (values[0] === 'desc') {
+    cars.value.sort((car1, car2) =>
+      values[1] === 'year' ? car2.year - car1.year : car2.price - car1.price,
+    );
   }
 };
 
@@ -58,20 +57,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="sorting">
-    <a-button type="primary button" @click="sortByAscending('year')"
-      >Сортировать по возрастанию года выпуска</a-button
-    >
-    <a-button type="primary button" @click="sortByDescending('year')"
-      >Сортировать по убыванию года выпуска</a-button
-    >
-    <a-button type="primary button" @click="sortByAscending('price')"
-      >Сортировать по возрастанию цены</a-button
-    >
-    <a-button type="primary button" @click="sortByDescending('price')"
-      >Сортировать по убыванию цены</a-button
-    >
-  </section>
+  <article class="sorting">
+    <div>
+      <p>Сортировать по:</p>
+      <select class="select-design" @change="sortBy" v-model="selectedValue">
+        <option value="0" disabled hidden>Сортировка по цене</option>
+        <option value="asc price">Цена по возрастанию</option>
+        <option value="desc price">Цена по убыванию</option>
+        <option value="asc year">Год по возрастанию</option>
+        <option value="desc year">Год по убыванию</option>
+      </select>
+    </div>
+  </article>
   <main>
     <div class="cars">
       <CarPage
@@ -101,5 +98,12 @@ onMounted(() => {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.select-design {
+  width: 288px;
+  height: 40px;
+  background: rgba(242, 242, 242, 1);
+  padding: 0px 16px;
 }
 </style>
