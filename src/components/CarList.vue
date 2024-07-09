@@ -8,7 +8,7 @@ import { getAllCars } from '../api/api';
 const cars = ref<Car[]>([]);
 const temporaryCarsStorage = ref<Car[]>([]);
 
-const getCars = () => {
+const getCars = async () => {
   getAllCars().then((result: Car[]) => {
     console.log(result);
     cars.value = result;
