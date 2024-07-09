@@ -11,7 +11,6 @@ const selectedValue = ref<string>('0');
 
 const getCars = async () => {
   getAllCars().then((result: Car[]) => {
-    console.log(result);
     cars.value = result;
     temporaryCarsStorage.value = result;
     console.log(cars.value);
@@ -49,6 +48,10 @@ const sortBy = () => {
       values[1] === 'year' ? car2.year - car1.year : car2.price - car1.price,
     );
   }
+  if (values[0] === 'reset') {
+    cars.value.sort((car1, car2) => car1.id - car2.id);
+    console.log(cars.value);
+  }
 };
 
 onMounted(() => {
@@ -61,11 +64,12 @@ onMounted(() => {
     <div>
       <p>Сортировать по:</p>
       <select class="select-design" @change="sortBy" v-model="selectedValue">
-        <option value="0" disabled hidden>Сортировка по цене</option>
+        <option value="0" disabled hidden>Сортировка</option>
         <option value="asc price">Цена по возрастанию</option>
         <option value="desc price">Цена по убыванию</option>
         <option value="asc year">Год по возрастанию</option>
         <option value="desc year">Год по убыванию</option>
+        <option value="reset all">Сбросить</option>
       </select>
     </div>
   </article>
